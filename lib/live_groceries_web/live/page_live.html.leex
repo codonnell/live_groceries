@@ -1,0 +1,42 @@
+<section>
+  <h1 class="text-3xl mb-3">Grocery List</h1>
+  <%= for item <- Enum.filter(@items, & &1.completed == false) do %>
+    <div>
+      <input type="checkbox"
+             <%= if item.completed do "checked" end %>
+             phx-click="toggle_item_completed"
+             phx-value-id="<%= item.id %>" />
+      <input value="<%= item.name %>"
+             phx-keyup="update_item_name"
+             phx-value-id="<%= item.id %>"
+             phx-debounce="300" />
+      <button class="focus:outline-black rounded-full bg-red-600 w-6 ml-1"
+              phx-click="delete_item"
+              phx-value-id="<%= item.id %>">
+        -
+      </button>
+    </div>
+  <% end %>
+  <input class="my-2"
+         phx-keyup="create_item"
+         phx-key="Enter"
+         id="create-item-input"
+         phx-hook="CreateItemInput" />
+  <%= for item <- Enum.filter(@items, & &1.completed == true) do %>
+    <div>
+      <input type="checkbox"
+             <%= if item.completed do "checked" end %>
+             phx-click="toggle_item_completed"
+             phx-value-id="<%= item.id %>" />
+      <input value="<%= item.name %>"
+             phx-keyup="update_item_name"
+             phx-value-id="<%= item.id %>"
+             phx-debounce="300" />
+      <button class="focus:outline-black rounded-full bg-red-600 w-6 ml-1"
+              phx-click="delete_item"
+              phx-value-id="<%= item.id %>">
+        -
+      </button>
+    </div>
+  <% end %>
+</section>

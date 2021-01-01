@@ -1,0 +1,27 @@
+<ul class="flex">
+  <%= if @current_user do %>
+    <li class="mx-1"><%= @current_user.email %></li>
+    <li class="mx-1">
+      <%= link "Settings",
+      to: Routes.user_settings_path(@conn, :edit),
+      class: "text-blue-600 hover:text-blue-800 visited:text-purple-600" %>
+    </li>
+    <li class="mx-1">
+      <%= link "Log out",
+      to: Routes.user_session_path(@conn, :delete),
+      method: :delete,
+      class: "text-blue-600 hover:text-blue-800 visited:text-purple-600" %>
+    </li>
+  <% else %>
+    <li class="mx-1">
+      <%= link "Register",
+      to: Routes.user_registration_path(@conn, :new),
+      class: "text-blue-600 hover:text-blue-800 visited:text-purple-600" %>
+    </li>
+    <li class="mx-1">
+      <%= link "Log in",
+      to: Routes.user_session_path(@conn, :new),
+      class: "text-blue-600 hover:text-blue-800 visited:text-purple-600" %>
+    </li>
+  <% end %>
+</ul>
