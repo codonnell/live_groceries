@@ -23,6 +23,10 @@ defmodule LiveGroceriesWeb.Router do
     live "/", PageLive, :index
   end
 
+  if Mix.env() == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", LiveGroceriesWeb do
   #   pipe_through :api

@@ -23,3 +23,6 @@ config :live_groceries, LiveGroceriesWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Use mock email adapter for testing
+config :live_groceries, LiveGroceries.Mailer, adapter: Bamboo.TestAdapter

@@ -74,3 +74,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Don't send emails during development
+config :live_groceries, LiveGroceries.Mailer, adapter: Bamboo.LocalAdapter
