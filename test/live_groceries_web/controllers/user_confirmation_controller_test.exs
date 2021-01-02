@@ -13,7 +13,7 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
     test "renders the confirmation page", %{conn: conn} do
       conn = get(conn, Routes.user_confirmation_path(conn, :new))
       response = html_response(conn, 200)
-      assert response =~ "<h1>Resend confirmation instructions</h1>"
+      assert response =~ "Resend confirmation instructions</h1>"
     end
   end
 
@@ -25,7 +25,7 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
           "user" => %{"email" => user.email}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       assert get_flash(conn, :info) =~ "If your email is in our system"
       assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context == "confirm"
     end
@@ -38,7 +38,7 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
           "user" => %{"email" => user.email}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       assert get_flash(conn, :info) =~ "If your email is in our system"
       refute Repo.get_by(Accounts.UserToken, user_id: user.id)
     end
@@ -49,7 +49,7 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
           "user" => %{"email" => "unknown@example.com"}
         })
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       assert get_flash(conn, :info) =~ "If your email is in our system"
       assert Repo.all(Accounts.UserToken) == []
     end
@@ -63,7 +63,7 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
         end)
 
       conn = get(conn, Routes.user_confirmation_path(conn, :confirm, token))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       assert get_flash(conn, :info) =~ "Account confirmed successfully"
       assert Accounts.get_user!(user.id).confirmed_at
       refute get_session(conn, :user_token)
@@ -71,7 +71,7 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
 
       # When not logged in
       conn = get(conn, Routes.user_confirmation_path(conn, :confirm, token))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       assert get_flash(conn, :error) =~ "Account confirmation link is invalid or it has expired"
 
       # When logged in
@@ -80,13 +80,13 @@ defmodule LiveGroceriesWeb.UserConfirmationControllerTest do
         |> log_in_user(user)
         |> get(Routes.user_confirmation_path(conn, :confirm, token))
 
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       refute get_flash(conn, :error)
     end
 
     test "does not confirm email with invalid token", %{conn: conn, user: user} do
       conn = get(conn, Routes.user_confirmation_path(conn, :confirm, "oops"))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/users/log_in"
       assert get_flash(conn, :error) =~ "Account confirmation link is invalid or it has expired"
       refute Accounts.get_user!(user.id).confirmed_at
     end
