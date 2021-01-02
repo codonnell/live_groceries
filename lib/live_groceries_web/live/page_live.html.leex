@@ -28,7 +28,8 @@
              <%= if item.completed do "checked" end %>
              phx-click="toggle_item_completed"
              phx-value-id="<%= item.id %>" />
-      <input value="<%= item.name %>"
+      <input class="line-through"
+             value="<%= item.name %>"
              phx-keyup="update_item_name"
              phx-value-id="<%= item.id %>"
              phx-debounce="300" />
