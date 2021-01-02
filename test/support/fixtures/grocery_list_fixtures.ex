@@ -5,21 +5,21 @@ defmodule LiveGroceries.GroceryListFixtures do
   """
 
   def unique_name, do: "item#{System.unique_integer()}"
-  def unique_position, do: System.unique_integer()
+  def unique_position, do: System.unique_integer([:positive, :monotonic])
 
   def item_fixture(user, attrs \\ %{}) do
     attrs =
       Enum.into(
+        attrs,
         %{
           name: unique_name(),
           position: unique_position(),
           completed: false
-        },
-        attrs
+        }
       )
 
-    {:ok, grocery_list_item} = LiveGroceries.GroceryList.create_item(user, attrs)
+    {:ok, item} = LiveGroceries.GroceryList.create_item(user, attrs)
 
-    grocery_list_item
+    item
   end
 end
