@@ -45,7 +45,7 @@ config :logger, level: :info
 # We also recommend setting `force_ssl` in your endpoint, ensuring
 # no data is ever sent via http, always redirecting to https:
 #
-#     config :live_groceries, LiveGroceriesWeb.Endpoint,
+config :live_groceries, LiveGroceriesWeb.Endpoint, force_ssl: [rewrite_on: [:x_forwarded_proto]]
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
