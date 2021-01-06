@@ -18,7 +18,7 @@ defmodule LiveGroceries.GroceryListTest do
     @invalid_attrs %{completed: false, name: nil, position: nil}
 
     def item_fixture(%Accounts.User{} = user, attrs \\ %{}) do
-      attrs = Enum.into(@valid_attrs, attrs)
+      attrs = Enum.into(attrs, @valid_attrs)
       {:ok, item} = GroceryList.create_item(user, attrs)
       item
     end
@@ -30,6 +30,14 @@ defmodule LiveGroceries.GroceryListTest do
       %Item{id: id2} = item_fixture(user)
 
       assert [%Item{id: ^id1}, %Item{id: ^id2}] = GroceryList.list_user_items(user)
+    end
+
+    test "list_items/0 returns items ordered by position" do
+      user = user_fixture()
+      %Item{id: id1} = item_fixture(user, %{position: 2})
+      %Item{id: id2} = item_fixture(user, %{position: 1})
+
+      assert [%Item{id: ^id2}, %Item{id: ^id1}] = GroceryList.list_user_items(user)
     end
 
     test "get_user_item!/1 returns the item with given id" do

@@ -21,6 +21,7 @@ defmodule LiveGroceries.GroceryList do
   def list_user_items(%Accounts.User{} = user) do
     Item
     |> user_item_query(user)
+    |> order_by(asc: :position)
     |> Repo.all()
   end
 
